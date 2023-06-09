@@ -4,18 +4,12 @@ import time
 from cvzone.HandTrackingModule import HandDetector
 
 
-# In[2]:
-
-
 ec2 = boto3.resource('ec2')
 elb = boto3.client('elbv2')
-# list of all OS running
+# list of all EC2 Instance running in AWS
 allOS = []
 
-
-# In[3]:
-
-
+#Define funtion for launch ec2 instance
 def LaunchOS():
     instances = ec2.create_instances(
         ImageId="ami-0a2acf24c0d86e927",
@@ -40,13 +34,10 @@ def LaunchOS():
     ],
                     )
     
-    # print(allOS)
     print("Total OS : " , len(allOS))
 
 
-# In[4]:
-
-
+# Define function for terminate ec2 instance
 def TerminateOS():
     if allOS:
         myos = allOS.pop()
@@ -67,24 +58,16 @@ def TerminateOS():
         print("no more OS is Running")
 
 
-# In[5]:
-
 
 detector = HandDetector(maxHands=1,
                         detectionCon=0.8)
 
 
-# In[6]:
-
-
-cap  = cv2.VideoCapture(0)
-
-
-# In[8]:
+capture  = cv2.VideoCapture(0)
 
 
 while True:
-    ret, img = cap.read()
+    status, img = capture.read()
     cv2.imshow("Img" , img)
     if cv2.waitKey(1000) == 13:
         break
@@ -108,7 +91,5 @@ cv2.destroyAllWindows()
        
 
 
-# In[9]:
 
-
-cap.release()   
+capture.release()   
