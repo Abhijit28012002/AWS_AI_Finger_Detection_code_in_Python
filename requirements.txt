@@ -5,3 +5,5 @@ matplotlib
 tensorflow
 boto3
 opencv-python
+cvzone
+mediapipe
